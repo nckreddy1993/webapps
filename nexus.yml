@@ -1,0 +1,58 @@
+[root@ip-172-31-44-205 ansible-app]# cat nexus.yml
+- hosts: 172.31.41.95
+  become: true
+  tasks:
+    - name: Install Java
+      yum:
+        name: java-1.8.0-openjdk
+        state: present
+    - name: get_installer
+      get_url:
+        url: https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+        dest: /opt/
+    - name: Unarchive
+      ansible.builtin.shell:
+        cmd: tar -xvf nexus-3.6*.tar.gz
+        chdir: /opt/
+    - name: Unarchive
+      ansible.builtin.shell:
+        cmd: rm -rf nexus-3.6*.tar.gz
+        chdir: /opt/
+    - name: renaming to nexus 3
+      ansible.builtin.shell:
+        cmd: mv nexus-3.* nexus3
+        chdir: /opt/
+    - name: owner and group permissions
+      ansible.builtin.shell:
+        cmd: chown -R ec2-user:ec2-user nexus3/ sonatype-work/
+        chdir: /opt/
+    - name: renaming to nexus 3
+      ansible.builtin.shell:
+        cmd: echo run_as_user="ec2-user" >> /opt/nexus3/bin/nexus.rc
+        chdir: /opt/nexus3/bin/
+    - name: make nexus symbolic
+      file:
+        src: /opt/nexus3/bin/nexus
+        dest: /etc/init.d/nexus
+        owner: ec2-user
+        group: ec2-user
+        state: link
+    - name: /etc/init.d
+      ansible.builtin.shell:
+        cmd: cd /etc/init.d/
+        chdir: /etc/init.d/
+    - name: chkconfig --add nexus
+      ansible.builtin.shell:
+        cmd: chkconfig --add nexus
+        chdir: /etc/init.d/
+    - name: chkconfig nexus on
+      ansible.builtin.shell:
+        cmd: chkconfig nexus on
+        chdir: /etc/init.d/
+    - name: start nexus
+      systemd:
+        name: nexus
+        state: started
+        daemon_reload: yes
+        enabled: yes
+[root@ip-172-31-44-205 ansible-app]#
