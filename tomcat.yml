@@ -1,5 +1,4 @@
-[root@ip-172-31-44-205 ansible-app]# cat tomcat.yml
-- hosts: 172.31.7.124
+- hosts: 172.31.22.114
   become: true
   tasks:
     - name: Install Java
@@ -71,4 +70,3 @@
         state: started
         daemon_reload: yes
         enabled: yes
-[root@ip-172-31-44-205 ansible-app]#
