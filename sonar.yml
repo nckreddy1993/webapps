@@ -1,4 +1,4 @@
-- hosts: 172.31.24.166
+- hosts: sonar
   become: true
   tasks:
     - name: Install Java
