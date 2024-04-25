@@ -1,0 +1,2 @@
+[nexus]
+172.31.19.84 ansible_user=ec2-user 
