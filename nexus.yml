@@ -1,5 +1,4 @@
-[root@ip-172-31-44-205 ansible-app]# cat nexus.yml
-- hosts: 172.31.41.95
+- hosts: 172.31.19.84
   become: true
   tasks:
     - name: Install Java
@@ -55,4 +54,3 @@
         state: started
         daemon_reload: yes
         enabled: yes
-[root@ip-172-31-44-205 ansible-app]#
