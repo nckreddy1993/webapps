@@ -1,0 +1,2 @@
+[sonar]
+172.31.24.166 ansible_user=ec2-user 
