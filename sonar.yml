@@ -1,5 +1,4 @@
-[root@ip-172-31-44-205 ansible-app]# cat sonar.yml
-- hosts: 172.31.46.43
+- hosts: 172.31.24.166
   become: true
   tasks:
     - name: Install Java
@@ -20,4 +19,3 @@
         state: started
         daemon_reload: yes
         enabled: yes
-[root@ip-172-31-44-205 ansible-app]#
